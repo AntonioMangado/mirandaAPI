@@ -1,8 +1,9 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import { roomControllers } from "./controllers/roomControllers";
 import { bookingsControllers } from "./controllers/bookingsControllers";
 import { reviewsControllers } from "./controllers/reviewsControllers";
 import { staffControllers } from "./controllers/staffControllers";
+import { APIError } from "./lib/interfaces";
 export const app = express();
 
 app.use(express.json());
@@ -16,7 +17,18 @@ app.use("/", roomControllers);
 app.use("/", bookingsControllers);
 app.use("/", reviewsControllers);
 app.use("/", staffControllers);
-app.get("*", (req: Request, res: Response) => {
-    res.status(404).send("El gatito está triste, page not found.")
+
+// error 404
+// app.get("*", (req: Request, res: Response) => {
+//     res.status(404).send("El gatito está triste, page not found.")
+// })
+
+// error handler 
+app.use((err: APIError, req: Request, res: Response, next: NextFunction) => {
+    console.error(err)
+    console.log("Llega al error handler")
+    return res.status(err.status ?? 500).json({error: true, message: err.safe ? err.message : "Internal server error"})
 })
+
+
 

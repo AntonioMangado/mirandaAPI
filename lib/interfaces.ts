@@ -57,4 +57,9 @@ export interface Admin {
     password: string;
 }
 
+export interface APIError extends Error {
+    status?: number;
+    safe?: boolean;
+}
+
 export type Data = Room[] | Booking[] | Review[] | Staff[];
