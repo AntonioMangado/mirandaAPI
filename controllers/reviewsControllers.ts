@@ -1,29 +1,26 @@
 import express, { Request, Response } from "express";
 import { reviews } from "../data/reviews"
+import { getReviews, getReview } from "../services/review";
 const app = express();
-const router = express.Router();
+export const reviewsControllers = express.Router();
 
-router.get("/reviews", (req: Request, res: Response) => {
+reviewsControllers.get("/reviews", async (req: Request, res: Response): Promise<void> => {
+    const reviews = await getReviews()
     res.json({data: reviews})
 })
-router.post("/reviews", (req: Request, res: Response) => {
+reviewsControllers.post("/reviews", (req: Request, res: Response) => {
     res.json({data: reviews})
 })
 
-router.get("/review/:id", (req: Request, res: Response) => {
+reviewsControllers.get("/review/:id", async (req: Request, res: Response): Promise<void> => {
     const id = (req.params.id).toLowerCase();
-    const review = reviews.find(review => (review.orderId).toLowerCase() === id)
-    review 
-        ? res.json(review)
-        : res.status(404).json({message: "review not found"})
+    const review = await getReview(id)
+    res.json(review)
 })
 
-router.patch("/review/:id", (req: Request, res: Response) => {
+reviewsControllers.patch("/review/:id", (req: Request, res: Response) => {
     res.json({data: reviews})
 })
-router.delete("/review/:id", (req: Request, res: Response) => {
+reviewsControllers.delete("/review/:id", (req: Request, res: Response) => {
     res.json({data: reviews})
 })
-
-
-module.exports = router;

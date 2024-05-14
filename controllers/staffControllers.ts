@@ -1,29 +1,26 @@
 import express, { Request, Response } from "express";
 import { staff } from "../data/staff"
+import { getStaff, getEmployee } from "../services/staff";
 const app = express();
-const router = express.Router();
+export const staffControllers = express.Router();
 
-router.get("/staff", (req: Request, res: Response) => {
+staffControllers.get("/staff", async (req: Request, res: Response) => {
+    const staff = await getStaff()
     res.json({data: staff})
 })
-router.post("/staff", (req: Request, res: Response) => {
+staffControllers.post("/staff", (req: Request, res: Response) => {
     res.json({data: staff})
 })
-
-router.get("/staff/:id", (req: Request, res: Response) => {
+ 
+staffControllers.get("/staff/:id", async (req: Request, res: Response) => {
     const id = (req.params.id).toLowerCase();
-    const member = staff.find(member => (member.employeeId).toLowerCase() === id)
-    member 
-        ? res.json(member)
-        : res.status(404).json({message: "Staff member not found"})
+    const member = await getEmployee(id)
+    res.json(member)
 })
 
-router.patch("/staff/:id", (req: Request, res: Response) => {
+staffControllers.patch("/staff/:id", (req: Request, res: Response) => {
     res.json({data: staff})
 })
-router.delete("/staff/:id", (req: Request, res: Response) => {
+staffControllers.delete("/staff/:id", (req: Request, res: Response) => {
     res.json({data: staff})
 })
-
-
-module.exports = router;

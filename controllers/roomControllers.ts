@@ -1,29 +1,26 @@
 import express, { Request, Response } from "express";
 import { rooms } from "../data/rooms"
+import { getRoom, getRooms } from "../services/room"
 const app = express();
-const router = express.Router();
+export const roomControllers = express.Router();
 
-router.get("/rooms", (req: Request, res: Response) => {
+roomControllers.get("/rooms", async (req: Request, res: Response): Promise<void> => {
+    const rooms = await getRooms()
+    res.json(rooms)
+})
+roomControllers.post("/rooms", async (req: Request, res: Response): Promise<void> => {
     res.json({data: rooms})
 })
-router.post("/rooms", (req: Request, res: Response) => {
-    res.json({data: rooms})
-})
 
-router.get("/room/:id", (req: Request, res: Response) => {
+roomControllers.get("/room/:id", async (req: Request, res: Response): Promise<void> => {
     const id = (req.params.id).toLowerCase();
-    const room = rooms.find(room => (room.roomID).toLowerCase() === id)
-    room 
-        ? res.json(room)
-        : res.status(404).json({message: "Room not found"})
+    const room = await getRoom(id)
+    res.json(room)
 })
 
-router.patch("/room/:id", (req: Request, res: Response) => {
+roomControllers.patch("/room/:id", async (req: Request, res: Response) => {
     res.json({data: rooms})
 })
-router.delete("/room/:id", (req: Request, res: Response) => {
+roomControllers.delete("/room/:id", async (req: Request, res: Response) => {
     res.json({data: rooms})
 })
-
-
-module.exports = router;

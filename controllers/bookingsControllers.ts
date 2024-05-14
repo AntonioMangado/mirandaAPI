@@ -1,29 +1,26 @@
 import express, { Request, Response } from "express";
 import { bookings } from "../data/bookings"
+import { getBooking, getBookings } from "../services/booking";
 const app = express();
-const router = express.Router();
+export const bookingsControllers = express.Router();
 
-router.get("/bookings", (req: Request, res: Response) => {
+bookingsControllers.get("/bookings", async (req: Request, res: Response): Promise<void>  => {
+    const bookings = await getBookings()
+    res.json(bookings)
+})
+bookingsControllers.post("/bookings", (req: Request, res: Response) => {
     res.json({data: bookings})
 })
-router.post("/bookings", (req: Request, res: Response) => {
-    res.json({data: bookings})
-})
 
-router.get("/booking/:id", (req: Request, res: Response) => {
+bookingsControllers.get("/booking/:id", async (req: Request, res: Response): Promise<void>  => {
     const id = req.params.id;
-    const booking = bookings.find(booking => (booking.booking_id) === Number(id))
-    booking 
-        ? res.json(booking)
-        : res.status(404).json({message: "Booking not found"})
+    const booking = await getBooking(Number(id))
+    res.json(booking)
 })
 
-router.patch("/booking/:id", (req: Request, res: Response) => {
+bookingsControllers.patch("/booking/:id", (req: Request, res: Response) => {
     res.json({data: bookings})
 })
-router.delete("/booking/:id", (req: Request, res: Response) => {
+bookingsControllers.delete("/booking/:id", (req: Request, res: Response) => {
     res.json({data: bookings})
 })
-
-
-module.exports = router;

@@ -1,25 +1,22 @@
 import express, { Request, Response } from "express";
-const app = express();
-const port = 4000;
-const roomControllers = require("./controllers/roomControllers");
-const bookingsControllers = require("./controllers/bookingsControllers");
-const reviewsControllers = require("./controllers/reviewsControllers");
-const staffControllers = require("./controllers/staffControllers");
+import { roomControllers } from "./controllers/roomControllers";
+import { bookingsControllers } from "./controllers/bookingsControllers";
+import { reviewsControllers } from "./controllers/reviewsControllers";
+import { staffControllers } from "./controllers/staffControllers";
+export const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-
 app.get("/", (req: Request, res: Response) => {
-    res.send("Miranda Hotel API\n Available routes: \n /home \n /rooms \n /room/:id \n /reviews \n /staff \n /bookings")
+    res.send("Miranda Hotel API<br/> Available endpoints:<br/> /home<br/> /rooms<br/> /room/:id<br/> /reviews<br/> /review/:id <br/> /staff<br/> /staff/:id<br/> /bookings<br/> /booking/:id<br/>")
 })
 
 app.use("/", roomControllers);
 app.use("/", bookingsControllers);
 app.use("/", reviewsControllers);
 app.use("/", staffControllers);
-
-app.listen(port, () => {
-    console.log(`Server is running on port http://localhost:${port}`);
+app.get("*", (req: Request, res: Response) => {
+    res.status(404).send("El gatito está triste, page not found.")
 })
+
