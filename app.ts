@@ -26,7 +26,6 @@ app.use("/", staffControllers);
 // error handler 
 app.use((err: APIError, req: Request, res: Response, next: NextFunction) => {
     console.error(err)
-    console.log("Llega al error handler")
     return res.status(err.status ?? 500).json({error: true, message: err.safe ? err.message : "Internal server error"})
 })
 
