@@ -62,4 +62,9 @@ export interface APIError extends Error {
     safe?: boolean;
 }
 
+export interface LoginResponse {
+    message: string;
+    token: string;
+}
+
 export type Data = Room[] | Booking[] | Review[] | Staff[];

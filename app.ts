@@ -1,8 +1,11 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express, { NextFunction, Request, Response } from "express";
 import { roomControllers } from "./controllers/roomControllers";
 import { bookingsControllers } from "./controllers/bookingsControllers";
 import { reviewsControllers } from "./controllers/reviewsControllers";
 import { staffControllers } from "./controllers/staffControllers";
+import { loginControllers } from "./controllers/loginControllers";
 import { APIError } from "./lib/interfaces";
 export const app = express();
 
@@ -17,6 +20,7 @@ app.use("/", roomControllers);
 app.use("/", bookingsControllers);
 app.use("/", reviewsControllers);
 app.use("/", staffControllers);
+app.use("/", loginControllers);
 
 // error 404
 // app.get("*", (req: Request, res: Response) => {
