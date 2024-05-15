@@ -10,7 +10,6 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
     const token = authHeaders.split("Bearer ")[1];
     try {
         const tokenData = jwt.verify(token, process.env.CLIENT_SECRET as string);
-        console.log(tokenData)
         next();
     } catch (error) {
         return res.status(401).json({ error: true, message: "Invalid token" });

@@ -57,7 +57,7 @@ export interface Admin {
     password: string;
 }
 
-export interface APIError extends Error {
+export interface IAPIError extends Error {
     status?: number;
     safe?: boolean;
 }
