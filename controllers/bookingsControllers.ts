@@ -7,7 +7,7 @@ export const bookingsControllers = express.Router();
 bookingsControllers.get("/bookings", async (req: Request, res: Response, next: NextFunction): Promise<Response | void>  => {
     try {
         const bookings = await getBookings()
-        return res.json(bookings)
+        return res.json({data: bookings})
     } catch (error) {
         next(error)
     }

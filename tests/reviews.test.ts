@@ -14,7 +14,7 @@ describe("GET /reviews", () => {
         const token = response.body.token;
         // Use the token to make a request to /rooms
         const roomResponse = await supertest(app).get("/reviews").set("Authorization", `Bearer ${token}`);
-        expect(roomResponse.body).toEqual(reviews);
+        expect(roomResponse.body).toEqual({data: reviews});
     })
 })
 

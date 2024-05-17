@@ -7,7 +7,7 @@ export const reviewsControllers = express.Router();
 reviewsControllers.get("/reviews", async (req: Request, res: Response, next: NextFunction): Promise<Response|void> => {
     try {
         const reviews = await getReviews()
-        return res.json(reviews)
+        return res.json({data: reviews})
     } catch (error) {
         next(error);
     }
