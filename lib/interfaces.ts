@@ -16,7 +16,7 @@ export interface IBooking {
     status: string; 
 }
 
-export interface Review {
+export interface IReview {
     [key: string]: any;
     orderId: string;
     date: string;
@@ -25,7 +25,7 @@ export interface Review {
     comment: string;
 }
 
-export interface Room {
+export interface IRoom {
     [key: string]: any;
     image: string;
     roomNumber: number;
@@ -37,7 +37,7 @@ export interface Room {
     status: string;
 }
 
-export interface Staff {
+export interface IStaff {
     [key: string]: any;
     photo: string;
     fullName: string;
@@ -67,4 +67,4 @@ export interface LoginResponse {
     token: string;
 }
 
-export type Data = Room[] | Booking[] | Review[] | Staff[];
+export type Data = IRoom[] | IBooking[] | IReview[] | IStaff[];

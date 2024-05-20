@@ -1,6 +1,6 @@
-import { Room } from '../lib/interfaces';
+import { IRoom } from '../lib/interfaces';
 
-export const rooms: Room[] = [
+export const rooms: IRoom[] = [
   {
     image: 'hotel-room.webp',
     roomNumber: 101,

@@ -1,6 +1,5 @@
 import { Schema, model, connect, disconnect, HydratedDocument } from "mongoose";
 import { IBooking } from "../lib/interfaces"
-require("../config/mongodb")
 
 const objectSchema = {
     guest: {

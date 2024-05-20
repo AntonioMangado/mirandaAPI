@@ -1,6 +1,6 @@
-import { Review } from '../lib/interfaces';
+import { IReview } from '../lib/interfaces';
 
-export const reviews: Review[] = [
+export const reviews: IReview[] = [
     {
         "orderId": "ORD001",
         "date": "2024-04-01",
