@@ -2,11 +2,11 @@ import { Schema, model, connect, HydratedDocument, disconnect } from "mongoose";
 import { IReview } from "../lib/interfaces"
 
 const objectSchema = {
-    orderId: String,
-    date: String,
-    customer: String,
-    rating: Number,
-    comment: String
+    orderId: {type: String, required: true},
+    date: {type: String, required: true},
+    customer: {type: String, required: true},
+    rating: {type: Number, required: true},
+    comment: {type: String, required: true}
 }
 
 const reviewSchema = new Schema<IReview>(objectSchema);

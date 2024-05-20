@@ -1,4 +1,3 @@
-import { reviews } from "../data/reviews"
 import { IReview } from "../lib/interfaces"
 import Review from "../models/reviews.models"
 import { APIError } from "../middleware/error"
@@ -17,4 +16,12 @@ export async function getReview(id: string): Promise<IReview> {
         throw new APIError("Review not found", 404, true)
     }
     return review
+}
+
+export async function createReview(review: IReview): Promise<IReview> {
+    const newReview = new Review(review)
+    if (!newReview) {
+        throw new APIError("Invalid review format", 422, true)
+    }
+    return newReview.save()
 }

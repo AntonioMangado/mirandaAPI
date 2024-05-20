@@ -1,12 +1,11 @@
 import { Schema, model, connect, disconnect, HydratedDocument } from "mongoose";
-import bcrypt from "bcrypt"
 import { Admin } from "../lib/interfaces"
+import bcrypt from "bcrypt"
 
 const objectSchema = {
-    id: Number,
-    username: String,
-    email: String,
-    password: String
+    username: {type: String, required: true},
+    email: {type: String, required: true},
+    password: {type: String, required: true}
 }
 
 const adminSchema = new Schema<Admin>(objectSchema);
@@ -23,17 +22,17 @@ const Admin = model<Admin>("Admin", adminSchema);
 
 export default Admin;
 
-async function run() {
-    await connect("mongodb://localhost:27017")
-    const testAdmin: HydratedDocument<Admin> = new Admin({
-        id: 1,
-        username: "admin",
-        email: "admin@admin.com",
-        password: "admin"
-    })
-    await testAdmin.save();
-    console.log("Admin saved");
-    disconnect();
-}
+// async function run() {
+//     await connect("mongodb://localhost:27017")
+//     const testAdmin: HydratedDocument<Admin> = new Admin({
+//         id: 1,
+//         username: "admin",
+//         email: "admin@admin.com",
+//         password: "admin"
+//     })
+//     await testAdmin.save();
+//     console.log("Admin saved");
+//     disconnect();
+// }
 
-run().catch(err => console.error(err))
+// run().catch(err => console.error(err))

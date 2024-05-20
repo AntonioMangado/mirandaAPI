@@ -17,3 +17,11 @@ export async function getBooking(id: number): Promise<IBooking> {
     }
     return booking
 }
+
+export async function createBooking(booking: IBooking): Promise<IBooking> {
+    const newBooking = new Booking(booking)
+    if (!newBooking) {
+        throw new APIError("Invalid booking format", 422, true)
+    }
+    return newBooking.save()
+}

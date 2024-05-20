@@ -18,3 +18,11 @@ export async function getRoom(id: string): Promise<IRoom> {
     }
     return room
 }
+
+export async function createRoom(room: IRoom): Promise<IRoom> {
+    const newRoom = new Room(room)
+    if (!newRoom) {
+        throw new APIError("Invalid room format", 422, true)
+    }
+    return newRoom.save()
+}

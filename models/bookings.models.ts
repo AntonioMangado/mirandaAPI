@@ -3,17 +3,20 @@ import { IBooking } from "../lib/interfaces"
 
 const objectSchema = {
     guest: {
-        name: String,
-        surname: String,
+        type: {
+            name: String,
+            surname: String,
+        },
+        required: true
     },
-    booking_id: Number,
-    order_date: String,
-    check_in: String,
-    check_out: String,
+    booking_id: {type: Number, required: true},
+    order_date: {type: String, required: true},
+    check_in: {type: String, required: true},
+    check_out: {type: String, required: true},
     special_request: {type: String, default: null},
-    room_type: String,
-    roomID: String,
-    status: String
+    room_type: {type: String, required: true},
+    roomID: {type: String, required: true},
+    status: {type: String, required: true},
 }
 
 const bookingSchema = new Schema<IBooking>(objectSchema);

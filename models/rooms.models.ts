@@ -2,14 +2,14 @@ import { Schema, model, connect, HydratedDocument, disconnect } from "mongoose";
 import { IRoom } from "../lib/interfaces"
 
 const objectSchema = {
-    image: String,
-    roomNumber: Number,
-    roomID: String,
-    roomType: String,
-    amenities: [String],
-    price: Number,
-    offerPrice: Number,
-    status: String
+    image: {type: String, required: true},
+    roomNumber: {type: Number, required: true},
+    roomID: {type: String, required: true},
+    roomType: {type: String, required: true},
+    amenities: {type: [String], required: true},
+    price: {type: Number, required: true},
+    offerPrice: {type: Number, required: true},
+    status: {type: String, required: true}
 }
 
 const roomSchema = new Schema<IRoom>(objectSchema);

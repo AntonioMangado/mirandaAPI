@@ -1,5 +1,6 @@
 import { APIError } from "../middleware/error";
 import { LoginResponse } from "../lib/interfaces";
+import Admin from "../models/admins.models";
 import jwt from 'jsonwebtoken';
 
 
@@ -16,4 +17,14 @@ export async function loginUser(data: {email:string, password:string}): Promise<
     } else {
         throw new APIError("Invalid email or password", 401, true);
     }
+}
+
+export async function createAdmin(data: {username: string, email:string, password:string}) {
+    const { email, password, username } = data;
+    if (!email || !password || !username) {
+        throw new APIError("Please provide email, password and username", 400, true);
+    }
+
+    const newAdmin = new Admin({ email, password, username });
+    return newAdmin.save()
 }

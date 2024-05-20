@@ -17,3 +17,11 @@ export async function getEmployee(id: string): Promise<IStaff> {
     }
     return employee
 }
+
+export async function createEmployee(employee: IStaff): Promise<IStaff> {
+    const newEmployee = new Staff(employee)
+    if (!newEmployee) {
+        throw new APIError("Invalid employee format", 422, true)
+    }
+    return newEmployee.save()
+}

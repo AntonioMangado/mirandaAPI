@@ -3,13 +3,13 @@ import { IStaff } from "../lib/interfaces"
 
 const objectSchema = {
     photo: String,
-    fullName: String,
-    employeeId: String,
-    email: String,
-    startDate: String,
-    description: String,
-    contact: String,
-    status: String
+    fullName: {type: String, required: true},
+    employeeId: {type: String, required: true},
+    email: {type: String, required: true},
+    startDate: {type: String, required: true},
+    description: {type: String, required: true},
+    contact: {type: String, required: true},
+    status: {type: String, required: true}
 }
 
 const staffSchema = new Schema<IStaff>(objectSchema);

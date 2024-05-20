@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from "express";
 import { staff } from "../data/staff"
-import { getStaff, getEmployee } from "../services/staff";
+import { getStaff, getEmployee, createEmployee } from "../services/staff";
 const app = express();
 export const staffControllers = express.Router();
 
@@ -13,8 +13,14 @@ staffControllers.get("/staff", async (req: Request, res: Response, next: NextFun
     }
 })
 
-staffControllers.post("/staff", (req: Request, res: Response) => {
-    return res.json({data: staff})
+staffControllers.post("/staff", async (req: Request, res: Response, next: NextFunction): Promise<Response|void> => {
+    try {
+        const employee = req.body
+        const newEmployee = await createEmployee(employee)
+        return res.json({ data: newEmployee })
+    } catch (error) {
+        next(error)
+    }
 })
  
 staffControllers.get("/staff/:id", async (req: Request, res: Response, next: NextFunction): Promise<Response|void> => {

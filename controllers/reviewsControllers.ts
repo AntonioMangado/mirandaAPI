@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from "express";
 import { reviews } from "../data/reviews"
-import { getReviews, getReview } from "../services/review";
+import { getReviews, getReview, createReview } from "../services/review";
 const app = express();
 export const reviewsControllers = express.Router();
 
@@ -13,8 +13,14 @@ reviewsControllers.get("/reviews", async (req: Request, res: Response, next: Nex
     }
 })
 
-reviewsControllers.post("/reviews", (req: Request, res: Response) => {
-    return res.json({data: reviews})
+reviewsControllers.post("/reviews",  async (req: Request, res: Response, next: NextFunction): Promise<Response|void> => {
+    try {
+        const review = req.body
+        const newReview = await createReview(review)
+        return res.json({data: newReview})
+    } catch (error) {
+        next(error)
+    }
 })
 
 reviewsControllers.get("/review/:id", async (req: Request, res: Response, next: NextFunction): Promise<Response|void> => {

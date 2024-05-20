@@ -1,7 +1,6 @@
 import express, { NextFunction, Request, Response } from "express";
 import { bookings } from "../data/bookings"
-import { getBooking, getBookings } from "../services/booking";
-const app = express();
+import { getBooking, getBookings, createBooking } from "../services/booking";
 export const bookingsControllers = express.Router();
 
 bookingsControllers.get("/bookings", async (req: Request, res: Response, next: NextFunction): Promise<Response | void>  => {
@@ -12,8 +11,14 @@ bookingsControllers.get("/bookings", async (req: Request, res: Response, next: N
         next(error)
     }
 })
-bookingsControllers.post("/bookings", (req: Request, res: Response) => {
-    return res.json({data: bookings})
+bookingsControllers.post("/bookings", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const booking = req.body
+        const newBooking = await createBooking(booking)
+        return res.json({ data: newBooking})
+    } catch (error) {
+        next(error)
+    }
 })
 
 bookingsControllers.get("/booking/:id", async (req: Request, res: Response, next: NextFunction): Promise<Response | void>  => {
