@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+import { Schema, model, connect } from "mongoose";
+import { Review } from "../lib/interfaces"
 
 const objectSchema = {
     orderId: String,
@@ -8,8 +9,8 @@ const objectSchema = {
     comment: String
 }
 
-const reviewSchema = new mongoose.Schema(objectSchema);
+const reviewSchema = new Schema<Review>(objectSchema);
 
-const Review = mongoose.model("Review", reviewSchema);
+const Review = model<Review>("Review", reviewSchema);
 
 export default Review;

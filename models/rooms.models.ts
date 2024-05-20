@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+import { Schema, model, connect } from "mongoose";
+import { Room } from "../lib/interfaces"
 
 const objectSchema = {
     image: String,
@@ -11,8 +12,8 @@ const objectSchema = {
     status: String
 }
 
-const roomSchema = new mongoose.Schema(objectSchema);
+const roomSchema = new Schema<Room>(objectSchema);
 
-const Room = mongoose.model("Room", roomSchema);
+const Room = model<Room>("Room", roomSchema);
 
 export default Room;

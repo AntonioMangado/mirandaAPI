@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+import { Schema, model, connect } from "mongoose";
+import { Staff } from "../lib/interfaces"
 
 const objectSchema = {
     photo: String,
@@ -11,8 +12,8 @@ const objectSchema = {
     status: String
 }
 
-const staffSchema = new mongoose.Schema(objectSchema);
+const staffSchema = new Schema<Staff>(objectSchema);
 
-const Staff = mongoose.model("Staff", staffSchema);
+const Staff = model<Staff>("Staff", staffSchema);
 
 export default Staff;

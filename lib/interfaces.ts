@@ -3,7 +3,7 @@ interface Guest {
     surname: string;
 }
 
-export interface Booking {
+export interface IBooking {
     [key: string]: any;
     guest: Guest;
     booking_id: number;

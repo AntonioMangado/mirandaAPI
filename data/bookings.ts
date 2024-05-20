@@ -1,6 +1,6 @@
-import { Booking } from '../lib/interfaces';
+import { IBooking } from '../lib/interfaces';
 
-export const bookings: Booking[] = [
+export const bookings: IBooking[] = [
     {
       "guest": {
         "name": "John",
