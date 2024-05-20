@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
+require ("./config/mongodb")
 import express, { NextFunction, Request, Response } from "express";
 import { roomControllers } from "./controllers/roomControllers";
 import { bookingsControllers } from "./controllers/bookingsControllers";
