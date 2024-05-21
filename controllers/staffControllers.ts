@@ -1,6 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
-import { staff } from "../data/staff"
-import { getStaff, getEmployee, createEmployee } from "../services/staff";
+import { getStaff, getEmployee, createEmployee, updateStaff, deleteStaff } from "../services/staff";
 const app = express();
 export const staffControllers = express.Router();
 
@@ -33,9 +32,22 @@ staffControllers.get("/staff/:id", async (req: Request, res: Response, next: Nex
     }
 })
 
-staffControllers.patch("/staff/:id", (req: Request, res: Response) => {
-    return res.json({data: staff})
+staffControllers.patch("/staff/:id", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const id = req.params.id;
+        const data = req.body;
+        const updatedStaff = await updateStaff(id, data)
+        return res.json({data: updatedStaff})
+    } catch (error) {
+        next(error)
+    }
 })
-staffControllers.delete("/staff/:id", (req: Request, res: Response) => {
-    return res.json({data: staff})
+staffControllers.delete("/staff/:id", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const id = req.params.id;
+        const deletedStaff = await deleteStaff(id)
+        return res.json({data: deletedStaff})
+    } catch (error) {
+        next(error)
+    }
 })

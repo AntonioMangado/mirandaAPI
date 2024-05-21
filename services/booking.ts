@@ -25,3 +25,19 @@ export async function createBooking(booking: IBooking): Promise<IBooking> {
     }
     return newBooking.save()
 }
+
+export async function updateBooking(id: string, data: IBooking): Promise<IBooking> {
+    const updatedBooking = await Booking.findOneAndUpdate({_id: id}, data, {returnDocument: "after"});
+    if (!updatedBooking) {
+        throw new APIError("Booking not found", 404, true)
+    }
+    return updatedBooking;
+}
+
+export async function deleteBooking(id: string): Promise<IBooking> {
+    const deletedBooking = await Booking.findByIdAndDelete({_id: id});
+    if (!deletedBooking) {
+        throw new APIError("Booking not found", 404, true)
+    }
+    return deletedBooking
+}

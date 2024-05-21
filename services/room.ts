@@ -26,3 +26,19 @@ export async function createRoom(room: IRoom): Promise<IRoom> {
     }
     return newRoom.save()
 }
+
+export async function updateRoom(id: string, data: IRoom): Promise<IRoom> {
+    const updatedRoom = await Room.findOneAndUpdate({_id: id}, data, {returnDocument: "after"});
+    if (!updatedRoom) {
+        throw new APIError("Room not found", 404, true)
+    }
+    return updatedRoom;
+}
+
+export async function deleteRoom(id: string): Promise<IRoom> {
+    const deletedRoom = await Room.findByIdAndDelete({_id: id});
+    if (!deletedRoom) {
+        throw new APIError("Room not found", 404, true)
+    }
+    return deletedRoom
+}

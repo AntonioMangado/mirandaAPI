@@ -1,6 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
-import { rooms } from "../data/rooms"
-import { getRoom, getRooms, createRoom } from "../services/room"
+import { getRoom, getRooms, createRoom, updateRoom, deleteRoom } from "../services/room"
 const app = express();
 export const roomControllers = express.Router();
 
@@ -32,9 +31,22 @@ roomControllers.get("/room/:id", async (req: Request, res: Response, next: NextF
     }
 })
 
-roomControllers.patch("/room/:id", async (req: Request, res: Response) => {
-    return res.json({data: rooms})
+roomControllers.patch("/room/:id", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const id = req.params.id;
+        const data = req.body;
+        const updatedRoom = await updateRoom(id, data)
+        return res.json({data: updatedRoom})
+    } catch (error) {
+        next(error)
+    }
 })
-roomControllers.delete("/room/:id", async (req: Request, res: Response) => {
-    return res.json({data: rooms})
+roomControllers.delete("/room/:id", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const id = req.params.id;
+        const deletedRoom = await deleteRoom(id)
+        return res.json({data: deletedRoom})
+    } catch (error) {
+        next(error)
+    }
 })

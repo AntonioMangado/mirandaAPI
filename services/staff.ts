@@ -25,3 +25,19 @@ export async function createEmployee(employee: IStaff): Promise<IStaff> {
     }
     return newEmployee.save()
 }
+
+export async function updateStaff(id: string, data: IStaff): Promise<IStaff> {
+    const updatedStaff = await Staff.findOneAndUpdate({_id: id}, data, {returnDocument: "after"});
+    if (!updatedStaff) {
+        throw new APIError("Staff not found", 404, true)
+    }
+    return updatedStaff;
+}
+
+export async function deleteStaff(id: string): Promise<IStaff> {
+    const deletedStaff = await Staff.findByIdAndDelete({_id: id});
+    if (!deletedStaff) {
+        throw new APIError("Staff not found", 404, true)
+    }
+    return deletedStaff
+}

@@ -25,3 +25,19 @@ export async function createReview(review: IReview): Promise<IReview> {
     }
     return newReview.save()
 }
+
+export async function updateReview(id: string, data: IReview): Promise<IReview> {
+    const updatedReview = await Review.findOneAndUpdate({_id: id}, data, {returnDocument: "after"});
+    if (!updatedReview) {
+        throw new APIError("Review not found", 404, true)
+    }
+    return updatedReview;
+}
+
+export async function deleteReview(id: string): Promise<IReview> {
+    const deletedReview = await Review.findByIdAndDelete({_id: id});
+    if (!deletedReview) {
+        throw new APIError("Booking not found", 404, true)
+    }
+    return deletedReview
+}
