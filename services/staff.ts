@@ -11,7 +11,7 @@ export async function getStaff(): Promise<IStaff[]> {
 }
 
 export async function getEmployee(id: string): Promise<IStaff> {
-    const employee = await Staff.findOne({employeeId: id.toUpperCase()})
+    const employee = await Staff.findOne({_id: id})
     if (!employee) {
         throw new APIError("Employee not found", 404, true)
     }

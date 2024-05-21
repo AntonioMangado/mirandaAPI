@@ -12,7 +12,7 @@ export async function getRooms(): Promise<IRoom[]> {
 }
 
 export async function getRoom(id: string): Promise<IRoom> {
-    const room = await Room.findOne({ roomID: id.toUpperCase() })
+    const room = await Room.findOne({ _id: id })
     if (!room) {
         throw new APIError("Room not found", 404, true)
     }

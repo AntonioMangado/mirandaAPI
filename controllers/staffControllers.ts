@@ -26,7 +26,7 @@ staffControllers.get("/staff/:id", async (req: Request, res: Response, next: Nex
     try {
         const id = (req.params.id).toLowerCase();
         const member = await getEmployee(id)
-        return res.json(member)
+        return res.json({data: member})
     } catch (error) {
         next(error)
     }

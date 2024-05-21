@@ -24,7 +24,7 @@ bookingsControllers.post("/bookings", async (req: Request, res: Response, next: 
 bookingsControllers.get("/booking/:id", async (req: Request, res: Response, next: NextFunction): Promise<Response | void>  => {
     try {
         const id = req.params.id;
-        const booking = await getBooking(Number(id))
+        const booking = await getBooking(id)
         return res.json({data: booking})
     } catch (error) {
         next(error)

@@ -10,8 +10,8 @@ export async function getBookings(): Promise<IBooking[]> {
     return bookings
 }
 
-export async function getBooking(id: number): Promise<IBooking> {
-    const booking = await Booking.findOne({booking_id: id})
+export async function getBooking(id: string): Promise<IBooking> {
+    const booking = await Booking.findOne({_id: id})
     if (!booking) {
         throw new APIError("Booking not found", 404, true)
     }

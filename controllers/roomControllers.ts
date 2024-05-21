@@ -25,7 +25,7 @@ roomControllers.get("/room/:id", async (req: Request, res: Response, next: NextF
     try {
         const id = (req.params.id).toLowerCase();
         const room = await getRoom(id)
-        return res.json(room)
+        return res.json({data: room})
     } catch (error) {
         next(error)
     }
