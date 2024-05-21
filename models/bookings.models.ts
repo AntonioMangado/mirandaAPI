@@ -9,7 +9,6 @@ const objectSchema = {
         },
         required: true
     },
-    booking_id: {type: Number, required: true},
     order_date: {type: String, required: true},
     check_in: {type: String, required: true},
     check_out: {type: String, required: true},

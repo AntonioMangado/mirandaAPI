@@ -1,5 +1,5 @@
 import { Schema, model, connect, disconnect, HydratedDocument } from "mongoose";
-import { Admin } from "../lib/interfaces"
+import { IAdmin } from "../lib/interfaces"
 import bcrypt from "bcrypt"
 
 const objectSchema = {
@@ -8,17 +8,17 @@ const objectSchema = {
     password: {type: String, required: true}
 }
 
-const adminSchema = new Schema<Admin>(objectSchema);
+const adminSchema = new Schema<IAdmin>(objectSchema);
                                                                                                                                                                        
 adminSchema.pre('save', function(next) {                                                                                                                                        
     if (this.password) {                                                                                                                                                        
         let salt = bcrypt.genSaltSync(8)                                                                                                                                     
-        this.password = bcrypt.hashSync(this.password, salt)                                                                                                                
+        this.password = bcrypt.hashSync(this.password, salt)                                                                                                             
     }                                                                                                                                                                          
     next()                                                                                                                                                                     
 })
 
-const Admin = model<Admin>("Admin", adminSchema);
+const Admin = model<IAdmin>("Admin", adminSchema);
 
 export default Admin;
 

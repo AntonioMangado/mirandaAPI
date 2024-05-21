@@ -6,7 +6,6 @@ interface Guest {
 export interface IBooking {
     [key: string]: any;
     guest: Guest;
-    booking_id: number;
     order_date: string;
     check_in: string;
     check_out: string;
@@ -18,7 +17,6 @@ export interface IBooking {
 
 export interface IReview {
     [key: string]: any;
-    orderId: string;
     date: string;
     customer: string;
     rating: number;
@@ -29,7 +27,6 @@ export interface IRoom {
     [key: string]: any;
     image: string;
     roomNumber: number;
-    roomID: string;
     roomType: string;
     amenities: string[];
     price: number;
@@ -41,7 +38,6 @@ export interface IStaff {
     [key: string]: any;
     photo: string;
     fullName: string;
-    employeeId: string;
     email: string;
     startDate: string;
     description: string;
@@ -49,9 +45,8 @@ export interface IStaff {
     status: string;
 }
 
-export interface Admin {
+export interface IAdmin {
     [key: string]: any;
-    id: number;
     username: string;
     email: string;
     password: string;

@@ -4,7 +4,6 @@ import { IStaff } from "../lib/interfaces"
 const objectSchema = {
     photo: String,
     fullName: {type: String, required: true},
-    employeeId: {type: String, required: true},
     email: {type: String, required: true},
     startDate: {type: String, required: true},
     description: {type: String, required: true},
