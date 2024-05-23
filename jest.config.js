@@ -5,5 +5,8 @@ module.exports = {
   coveragePathIgnorePatterns: [
     "/node_modules/",
     "/dist/"
-  ]
+  ],
+  modulePathIgnorePatterns: [
+    "/dist/"
+  ],
 };

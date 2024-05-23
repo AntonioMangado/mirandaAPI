@@ -3,10 +3,13 @@ interface Guest {
     surname: string;
 }
 
-export interface Booking {
+interface GuestDB extends Guest {
+    _id: string;
+}
+
+export interface IBooking {
     [key: string]: any;
     guest: Guest;
-    booking_id: number;
     order_date: string;
     check_in: string;
     check_out: string;
@@ -16,20 +19,24 @@ export interface Booking {
     status: string; 
 }
 
-export interface Review {
+export interface IBookingDB extends IBooking {
+    _id: string;
+    __v: number;
+    guest: GuestDB;
+}
+
+export interface IReview {
     [key: string]: any;
-    orderId: string;
     date: string;
     customer: string;
     rating: number;
     comment: string;
 }
 
-export interface Room {
+export interface IRoom {
     [key: string]: any;
     image: string;
     roomNumber: number;
-    roomID: string;
     roomType: string;
     amenities: string[];
     price: number;
@@ -37,11 +44,10 @@ export interface Room {
     status: string;
 }
 
-export interface Staff {
+export interface IStaff {
     [key: string]: any;
     photo: string;
     fullName: string;
-    employeeId: string;
     email: string;
     startDate: string;
     description: string;
@@ -49,9 +55,8 @@ export interface Staff {
     status: string;
 }
 
-export interface Admin {
+export interface IAdmin {
     [key: string]: any;
-    id: number;
     username: string;
     email: string;
     password: string;
@@ -67,4 +72,4 @@ export interface LoginResponse {
     token: string;
 }
 
-export type Data = Room[] | Booking[] | Review[] | Staff[];
+export type Data = IRoom[] | IBooking[] | IReview[] | IStaff[];

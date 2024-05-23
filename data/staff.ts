@@ -1,6 +1,6 @@
-import { Staff } from '../lib/interfaces';
+import { IStaff } from '../lib/interfaces';
 
-export const staff: Staff[] = [
+export const staff: IStaff[] = [
     {
       photo: 'employee.webp',
       fullName: 'John Doe',
