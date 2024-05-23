@@ -3,6 +3,10 @@ interface Guest {
     surname: string;
 }
 
+interface GuestDB extends Guest {
+    _id: string;
+}
+
 export interface IBooking {
     [key: string]: any;
     guest: Guest;
@@ -13,6 +17,12 @@ export interface IBooking {
     room_type: string;
     roomID: string;
     status: string; 
+}
+
+export interface IBookingDB extends IBooking {
+    _id: string;
+    __v: number;
+    guest: GuestDB;
 }
 
 export interface IReview {

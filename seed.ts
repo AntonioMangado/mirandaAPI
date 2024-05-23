@@ -10,17 +10,17 @@ import Staff from './models/staff.models';
 
 const INTERVALS: number = 10;
 
-function generateAdmins(): IAdmin[] {
-    const admins: IAdmin[] = [];
-    for (let i = 0; i < INTERVALS; i++) {
-        admins.push({
-            username: faker.internet.userName(),
-            email: faker.internet.email(),
-            password: faker.internet.password(),
-        })
-    }
-    return admins;
-}
+// function generateAdmins(): IAdmin[] {
+//     const admins: IAdmin[] = [];
+//     for (let i = 0; i < INTERVALS; i++) {
+//         admins.push({
+//             username: faker.internet.userName(),
+//             email: faker.internet.email(),
+//             password: faker.internet.password(),
+//         })
+//     }
+//     return admins;
+// }
 
 function generateBookings(): IBooking[] {
     const bookings: IBooking[] = [];
@@ -89,22 +89,22 @@ function generateStaff(): IStaff[] {
 
 async function seedDB() {
     await Booking.deleteMany({});
-    await Admin.deleteMany({});
+    // await Admin.deleteMany({});
     await Room.deleteMany({});
     await Review.deleteMany({});
     await Staff.deleteMany({});
 
-    const admins = generateAdmins();
+    // const admins = generateAdmins();
     const bookings = generateBookings();
     const rooms = generateRooms();
     const reviews = generateReviews();
     const staff = generateStaff();
 
 
-    for (const admin of admins) { // use a for of loop to trigger the pre middleware that hashes the password
-        const newAdmin = new Admin(admin);
-        await newAdmin.save();
-    }
+    // for (const admin of admins) { // use a for of loop to trigger the pre middleware that hashes the password
+    //     const newAdmin = new Admin(admin);
+    //     await newAdmin.save();
+    // }
     await Booking.insertMany(bookings);
     await Room.insertMany(rooms);
     await Review.insertMany(reviews);

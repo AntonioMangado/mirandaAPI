@@ -11,11 +11,15 @@ export async function getBookings(): Promise<IBooking[]> {
 }
 
 export async function getBooking(id: string): Promise<IBooking> {
-    const booking = await Booking.findOne({_id: id})
-    if (!booking) {
-        throw new APIError("Booking not found", 404, true)
-    }
-    return booking
+    try {
+        const booking = await Booking.findOne({_id: id})
+            if (!booking) {
+                throw new APIError("Booking not found", 404, true)
+            }
+            return booking
+    } catch (err) {
+        throw new APIError('Invalid booking ID', 400, true)
+    }   
 }
 
 export async function createBooking(booking: IBooking): Promise<IBooking> {

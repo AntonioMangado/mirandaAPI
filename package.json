@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --watchAll",
     "start": "nodemon",
     "seedDB": "ts-node ./seed.ts",
     "build": "rm -rf dist && tsc",
@@ -19,6 +19,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
+    "mongodb-memory-server": "^9.2.0",
     "mongoose": "^8.4.0",
     "nodemon": "^3.1.0",
     "serverless-http": "^3.2.0",
