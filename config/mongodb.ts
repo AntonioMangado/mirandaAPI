@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-mongoose.connect("mongodb://localhost:27017/")
+mongoose.connect(`mongodb+srv://antoniomangado:${process.env.MONGO_PASS}@cluster0.tv7s1gr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`)
     .then( () => {
         console.log('Successfully connected to the database.')
     })
