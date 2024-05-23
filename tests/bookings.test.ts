@@ -1,18 +1,13 @@
 import supertest from 'supertest';
 import { app } from '../app';
 import Booking from '../models/bookings.models';
-import { IBookingDB } from '../lib/interfaces';
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 const token = jwt.sign({email: 'admin@admin.com', username: 'admin'}, process.env.CLIENT_SECRET as string, { expiresIn: "1d" });
 
-let dbBookings: IBookingDB[] = [];
-
-beforeEach(async () => {
+beforeAll(async () => {
     await mongoose.connect("mongodb://localhost:27017/")
-    dbBookings = await Booking.find({});
 })
-
 
 describe("GET /bookings", () => {
     it("should return the error message: No auth headers present", async () => {
@@ -21,9 +16,9 @@ describe("GET /bookings", () => {
     })
     
     it("should return an object with all the bookings", async () => {
-        const roomResponse = await supertest(app).get("/bookings").set("Authorization", `Bearer ${token}`);
-        expect(roomResponse.status).toBe(200);
-        expect(roomResponse.body.data).toBeInstanceOf(Array);
+        const bookingsResponse = await supertest(app).get("/bookings").set("Authorization", `Bearer ${token}`);
+        expect(bookingsResponse.status).toBe(200);
+        expect(bookingsResponse.body.data).toBeInstanceOf(Array);
     })
 })
 
@@ -34,16 +29,16 @@ describe("GET /booking/:id", () => {
     })
     
     it("should return an object with the appropiate booking", async () => {
-        const roomResponse = await supertest(app).get(`/booking/664ef847402b75843893ddd6`).set("Authorization", `Bearer ${token}`);
-        expect(roomResponse.body.data._id).toBeDefined();
-        expect(roomResponse.body.data._id).toBe('664ef847402b75843893ddd6');
-        expect(roomResponse.body.data).toBeInstanceOf(Object);
+        const bookingsResponse = await supertest(app).get(`/booking/664ef847402b75843893ddd6`).set("Authorization", `Bearer ${token}`);
+        expect(bookingsResponse.body.data._id).toBeDefined();
+        expect(bookingsResponse.body.data._id).toBe('664ef847402b75843893ddd6');
+        expect(bookingsResponse.body.data).toBeInstanceOf(Object);
     })
     
     it("should return the error message 'Booking not found' when looking for inexistent id", async () => {
-        const roomResponse = await supertest(app).get("/booking/256").set("Authorization", `Bearer ${token}`);
-        expect(roomResponse.status).toEqual(400);
-        expect(roomResponse.body).toEqual({error: true, message: "Invalid booking ID"});
+        const bookingsResponse = await supertest(app).get("/booking/256").set("Authorization", `Bearer ${token}`);
+        expect(bookingsResponse.status).toEqual(400);
+        expect(bookingsResponse.body).toEqual({error: true, message: "Invalid booking ID"});
     })
 })
 

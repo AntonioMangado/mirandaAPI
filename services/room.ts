@@ -12,11 +12,15 @@ export async function getRooms(): Promise<IRoom[]> {
 }
 
 export async function getRoom(id: string): Promise<IRoom> {
-    const room = await Room.findOne({ _id: id })
-    if (!room) {
-        throw new APIError("Room not found", 404, true)
+    try {
+        const room = await Room.findOne({ _id: id })
+            if (!room) {
+                throw new APIError("Room not found", 404, true)
+            }
+            return room 
+    } catch (err) {
+        throw new APIError('Invalid room ID', 400, true)
     }
-    return room
 }
 
 export async function createRoom(room: IRoom): Promise<IRoom> {

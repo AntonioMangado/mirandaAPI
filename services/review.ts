@@ -11,11 +11,15 @@ export async function getReviews(): Promise<IReview[]> {
 }
 
 export async function getReview(id: string): Promise<IReview> {
-    const review = await Review.findOne({_id: id})
-    if (!review) {
-        throw new APIError("Review not found", 404, true)
+    try {
+        const review = await Review.findOne({_id: id})
+            if (!review) {
+                throw new APIError("Review not found", 404, true)
+            }
+            return review
+    } catch (err) {
+        throw new APIError('Invalid review ID', 400, true)
     }
-    return review
 }
 
 export async function createReview(review: IReview): Promise<IReview> {
