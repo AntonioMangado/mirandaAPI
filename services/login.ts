@@ -1,7 +1,7 @@
 import { APIError } from "../middleware/error";
 import Admin from "../models/admins.models";
 import jwt from 'jsonwebtoken';
-import { compare } from 'bcrypt';
+const bcrypt = require('bcryptjs');
 
 
 export async function loginUser(data: {email:string, password:string}): Promise<string> {
@@ -15,7 +15,7 @@ export async function loginUser(data: {email:string, password:string}): Promise<
     if (admin) {
         const hashedPassword = admin.password;
         console.log(hashedPassword);
-        const match = await compare(password, hashedPassword);
+        const match = await bcrypt.compare(password, hashedPassword);
         if (match) {
             const user = { email, username: admin.username };
             const token = jwt.sign(user, process.env.CLIENT_SECRET as string, { expiresIn: "30m" });

@@ -7,6 +7,5 @@ mongoose.connect(`mongodb+srv://antoniomangado:${process.env.MONGO_PASS}@cluster
     .catch( (err) => {
         console.error(`Error connecting to the database. n${err}`);
     })
-
-
+    
 module.exports = mongoose;

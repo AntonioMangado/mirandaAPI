@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest --watchAll",
     "start": "nodemon",
-    "seedDB": "ts-node ./seed.ts",
+    "seedDB": "ts-node ./utils/seed.ts",
     "build": "rm -rf dist && tsc",
     "deploy": "npm run build && serverless deploy"
   },
@@ -15,7 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/node": "^20.12.11",
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",

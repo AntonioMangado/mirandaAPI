@@ -1,6 +1,6 @@
 import { Schema, model, connect, disconnect, HydratedDocument } from "mongoose";
 import { IAdmin } from "../lib/interfaces"
-import bcrypt from "bcrypt"
+const bcrypt = require('bcryptjs')
 
 const objectSchema = {
     username: {type: String, required: true},
