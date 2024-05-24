@@ -1,6 +1,6 @@
-import { Admin } from '../lib/interfaces';
+import { IAdmin } from '../lib/interfaces';
 
-export const admins: Admin[] = [
+export const admins: IAdmin[] = [
     {
         username: 'admin',
         email: "admin@gmail.com",

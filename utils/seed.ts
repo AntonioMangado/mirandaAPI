@@ -2,12 +2,12 @@ import dotenv from "dotenv";
 dotenv.config();
 import { connect, disconnect } from 'mongoose';
 import { faker } from '@faker-js/faker';
-import { IAdmin, IBooking, IRoom, IReview, IStaff } from "./lib/interfaces";
-import Booking from './models/bookings.models';
-import Admin from './models/admins.models';
-import Room from './models/rooms.models';
-import Review from './models/reviews.models';
-import Staff from './models/staff.models';
+import { IAdmin, IBooking, IRoom, IReview, IStaff } from "../lib/interfaces";
+import Booking from '../models/bookings.models';
+import Admin from '../models/admins.models';
+import Room from '../models/rooms.models';
+import Review from '../models/reviews.models';
+import Staff from '../models/staff.models';
 
 
 const INTERVALS: number = 10;
