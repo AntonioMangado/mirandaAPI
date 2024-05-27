@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 require ("./config/mongodb")
+import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
 import { roomControllers } from "./controllers/roomControllers";
 import { bookingsControllers } from "./controllers/bookingsControllers";
@@ -11,6 +12,30 @@ import { verifyToken } from "./middleware/verifyToken";
 import { IAPIError } from "./lib/interfaces";
 import { APIError } from "./middleware/error";
 export const app = express();
+
+// const origins: string[] = [
+//     'http://localhost:5173',
+// ]
+
+// app.options('/*', (_, res) => {
+//     res.sendStatus(200);
+// });
+
+// app.use((req: Request, res: Response, next: NextFunction) => {
+//     const reqOrigin = req.get('origin') as string;
+//     console.log(reqOrigin)
+//     let origin = 'http://invalidsite.com';
+//     if (origins.includes(reqOrigin)) {
+//         origin = reqOrigin;
+//     }
+//     res.header('Access-Control-Allow-Origin', origin);
+//     res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
+//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+//     res.header('Access-Control-Allow-Credentials', 'true');
+//     next();
+// });
+
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

@@ -1,5 +1,6 @@
-import { Schema, model, connect, disconnect, HydratedDocument } from "mongoose";
+import { Schema, Types, model, connect, disconnect, HydratedDocument } from "mongoose";
 import { IBooking } from "../lib/interfaces"
+import { ObjectId } from 'mongodb';
 
 const objectSchema = {
     guest: {
@@ -14,7 +15,7 @@ const objectSchema = {
     check_out: {type: String, required: true},
     special_request: {type: String, default: null},
     room_type: {type: String, required: true},
-    roomID: {type: String, required: true},
+    roomID: {type: Schema.Types.ObjectId, ref: 'Rooms', required: true},
     status: {type: String, required: true},
 }
 

@@ -1,3 +1,5 @@
+import { ObjectId } from 'mongodb';
+
 interface Guest {
     name: string;
     surname: string;
@@ -15,7 +17,7 @@ export interface IBooking {
     check_out: string;
     special_request: string | null;
     room_type: string;
-    roomID: string;
+    roomID: ObjectId;
     status: string; 
 }
 
