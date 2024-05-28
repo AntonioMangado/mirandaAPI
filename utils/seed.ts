@@ -34,7 +34,7 @@ function generateRooms(): IRoom[] {
             amenities: [faker.lorem.word(), faker.lorem.word(), faker.lorem.word()],
             price: Math.floor(Math.random() * 1000),
             offerPrice: Math.floor(Math.random() * 800),
-            status: faker.helpers.arrayElement(["Available", "Booked", "Unavailable"]),
+            status: faker.helpers.arrayElement(["available", "booked",]),
         })
     }
     return rooms;
