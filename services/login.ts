@@ -21,7 +21,7 @@ export async function loginUser(data: {email:string, password:string}): Promise<
         const match = await bcrypt.compare(password, hashedPassword);
         if (match) {
             const user = { email, username: admin.username };
-            const token = jwt.sign(user, process.env.CLIENT_SECRET as string, { expiresIn: "30m" });
+            const token = jwt.sign(user, process.env.CLIENT_SECRET as string, { expiresIn: "30d" });
             return { token, username: admin.username, email } ;
         } else {
             throw new APIError("Invalid email or password", 401, true);

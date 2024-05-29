@@ -1,4 +1,3 @@
-import { rooms } from "../data/rooms"
 import { IRoom } from "../lib/interfaces"
 import Room from "../models/rooms.models"
 import { APIError } from "../middleware/error"

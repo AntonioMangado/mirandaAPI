@@ -82,7 +82,7 @@ function generateStaff(): IStaff[] {
     const staff: IStaff[] = [];
     for (let i = 0; i < INTERVALS; i++) {
         staff.push({
-            photo: faker.image.avatar(),
+            photo: faker.image.avatarGitHub(),
             fullName: faker.person.fullName(),
             email: faker.internet.email(),
             startDate: faker.date.recent().toDateString(),
