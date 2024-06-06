@@ -35,6 +35,7 @@ export async function updateBooking(id: string, data: IBooking): Promise<IBookin
     if (!updatedBooking) {
         throw new APIError("Booking not found", 404, true)
     }
+    console.log(updatedBooking)
     return updatedBooking;
 }
 

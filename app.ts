@@ -62,7 +62,7 @@ app.get("*", (req: Request, res: Response) => {
 
 // error handler 
 app.use((err: IAPIError, req: Request, res: Response, next: NextFunction) => {
-    console.error(err)
+    // console.error(err)
     return res.status(err.status ?? 500).json({error: true, message: err.safe ? err.message : "Internal server error"})
 })
 

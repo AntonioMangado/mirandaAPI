@@ -15,7 +15,7 @@ bookingsControllers.post("/bookings", async (req: Request, res: Response, next: 
     try {
         const booking = req.body
         const newBooking = await createBooking(booking)
-        return res.json({ data: newBooking})
+        return res.json({data: newBooking})
     } catch (error) {
         next(error)
     }

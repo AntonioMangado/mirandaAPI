@@ -15,7 +15,7 @@ roomControllers.post("/rooms", async (req: Request, res: Response, next: NextFun
     try {
         const room = req.body
         const newRoom = await createRoom(room)
-        return res.json({ data: newRoom })
+        return res.json({data: newRoom })
     } catch (error) {
         next(error)
     }
