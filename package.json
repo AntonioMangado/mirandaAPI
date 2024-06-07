@@ -7,7 +7,6 @@
     "test": "jest --watchAll",
     "start": "nodemon",
     "seedDB": "ts-node ./utils/seed.ts",
-    "seedSQL_DB": "ts-node ./utils/seed_sql.ts",
     "build": "rm -rf dist && tsc",
     "deploy": "npm run build && serverless deploy"
   },
