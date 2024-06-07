@@ -4,21 +4,7 @@ import { IBooking, IRoom, IReview, IStaff } from "../lib/interfaces";
 const INTERVALS: number = 10;
 
 
-// Create tables if they dont exist
-const createAdminsTable = async () => {
-        const sql = `CREATE TABLE IF NOT EXISTS admins (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            username VARCHAR(255) NOT NULL,
-            email VARCHAR(255) NOT NULL,
-            password VARCHAR(255) NOT NULL
-        );`
-        
-        connection.query(sql, (err, result) => {
-            if (err) throw err;
-            console.log("Admins Table created");
-        });
-}
-
+// Create tables if they dont exist /////////////////////////////////////////////////////////////////////////////////
 const createBookingsTable = async () => {
         const sql = `CREATE TABLE IF NOT EXISTS bookings (
             booking_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -91,19 +77,7 @@ const createStaffTable = async () => {
 }
 
 
-
-// function generateAdmins(): IAdmin[] {
-//     const admins: IAdmin[] = [];
-//     for (let i = 0; i < INTERVALS; i++) {
-//         admins.push({
-//             username: faker.internet.userName(),
-//             email: faker.internet.email(),
-//             password: 'admin',
-//         })
-//     }
-//     return admins;
-// }
-
+// Generate data to insert into tables /////////////////////////////////////////////////////////////////////////////////
 function generateRoomsToInsert() {
     const rooms = [];
     for (let i = 0; i < INTERVALS; i++) {
@@ -121,64 +95,66 @@ function generateRoomsToInsert() {
     return rooms;
 }
 
-// async function generateBookingsToInsert(): Promise<IBooking[]> {
-//     const bookings: IBooking[] = [];
-//     const rooms = generateRooms();
-//     await Room.insertMany(rooms);
-//     const roomsFromDB = await Room.find({});
-//     const roomIDs = roomsFromDB.map(room => room._id);
-//     for (let i = 0; i < INTERVALS; i++) {
-//         bookings.push({
-//             guest: {
-//                 name: faker.person.firstName(),
-//                 surname: faker.person.lastName(),
-//             },
-//             order_date: faker.date.recent().toDateString(),
-//             check_in: faker.date.recent().toDateString(),
-//             check_out: faker.date.recent().toDateString(),
-//             special_request: faker.lorem.sentence(4),
-//             room_type: faker.helpers.arrayElement(["Single Bed", "Double Bed", "Double Superior", "Suite"]),
-//             roomID: faker.helpers.arrayElement(roomIDs),
-//             status: faker.helpers.arrayElement(["Check In", "Check Out", "In Progress"]),
-//         })
-//     }
-//     return bookings;
-// }
-
-
-function generateReviewsToInsert(): IReview[] {
-    const reviews: IReview[] = [];
+function generateBookingsToInsert() {
+    const bookings = [];
     for (let i = 0; i < INTERVALS; i++) {
-        reviews.push({
-            date: faker.date.recent().toDateString(),
-            customer: faker.person.fullName(),
-            rating: Math.floor(Math.random() * 6),
-            comment: faker.lorem.sentence(8),
-        })
+        bookings.push(
+            faker.person.fullName(),
+            faker.date.recent().toDateString(),
+            faker.date.recent().toDateString(),
+            faker.date.recent().toDateString(),
+            faker.helpers.arrayElement(["Single Bed", "Double Bed", "Double Superior", "Suite"]),
+            faker.number.int({ max: 10 }),
+            faker.helpers.arrayElement(["Check In", "Check Out", "In Progress"]),
+            faker.lorem.sentence(4),
+        )
+    }
+    return bookings;
+}
+
+
+function generateReviewsToInsert() {
+    const reviews = [];
+    for (let i = 0; i < INTERVALS; i++) {
+        reviews.push(
+            faker.number.int({ max: 10 }),
+            faker.number.int({ max: 5 }),
+            faker.lorem.sentence(8)
+        )
     }
     return reviews;
 }
 
-function generateStaffToInsert(): IStaff[] {
-    const staff: IStaff[] = [];
+function generateStaffToInsert() {
+    const staff = [];
     for (let i = 0; i < INTERVALS; i++) {
-        staff.push({
-            photo: faker.image.avatarGitHub(),
-            fullName: faker.person.fullName(),
-            email: faker.internet.email(),
-            startDate: faker.date.recent().toDateString(),
-            description: faker.person.jobTitle(),
-            contact: faker.phone.number(),
-            status: faker.helpers.arrayElement(["Active", "Inactive"]),
-        })
+        staff.push(
+            faker.person.fullName(),
+            faker.date.recent().toDateString(),
+            faker.person.jobTitle(),
+            faker.number.int({ min: 100, max: 500 }),
+            faker.helpers.arrayElement(["Active", "Inactive"]),
+        )
     }
     return staff;
 }
 
+
+// Insert data into db /////////////////////////////////////////////////////////////////////////////////////////////////
 const insertIntoStaff = async () => {
+
+    const generatePlaceholders = (num: number) => {
+        let values = '(?, ?, ?, ?, ?)';
+        for (let i = 0; i < num - 1; i++) {
+            values += ', (?, ?, ?, ?, ?)';
+        }
+        return values;
+    }
     
-    const sql = 'INSERT INTO `staff`(`fullname`, `start_date`, `description`, `contact`, `status`) VALUES (?, ?, ?, ?, ?)';
-    const values = ['Josh', '19 feb 24', 'developer', 453, 'available'];
+    const placeholders = generatePlaceholders(INTERVALS);
+    const sql = 'INSERT INTO `staff`(`fullname`, `start_date`, `description`, `contact`, `status`) VALUES ' + placeholders;
+    const values = generateStaffToInsert();
+    console.log(values.length);
 
     connection.execute(sql, values, (err, result, fields) => {
     if (err instanceof Error) {
@@ -200,10 +176,8 @@ const insertIntoRooms = async () => {
     }
     
     const placeholders = generatePlaceholders(INTERVALS);
-    const sql = 'INSERT INTO `rooms`(`image`, `room_number`, `room_type`, `amenities`, `price`, `offer_price`, `status`, `staff_id`) VALUES' + placeholders;
-    console.log(sql);
+    const sql = 'INSERT INTO `rooms`(`image`, `room_number`, `room_type`, `amenities`, `price`, `offer_price`, `status`, `staff_id`) VALUES ' + placeholders;
     const values = generateRoomsToInsert();
-    console.log(values.length);
 
     connection.execute(sql, values, (err, result, fields) => {
     if (err instanceof Error) {
@@ -215,9 +189,18 @@ const insertIntoRooms = async () => {
 }
 
 const insertIntoBookings = async () => {
-            
-    const sql = 'INSERT INTO `bookings`(`guest`, `order_date`, `check_in`, `check_out`, `room_type`, `room_id`, `status`, `special_request`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
-    const values = ['Josh', '19 feb 24', '19 feb 24', '19 feb 24', 'single', 1, 'pending', null];
+
+    const generatePlaceholders = (num: number) => {
+        let values = '(?, ?, ?, ?, ?, ?, ?, ?)';
+        for (let i = 0; i < num - 1; i++) {
+            values += ', (?, ?, ?, ?, ?, ?, ?, ?)';
+        }
+        return values;
+    }
+    
+    const placeholders = generatePlaceholders(INTERVALS);
+    const sql = 'INSERT INTO `bookings`(`guest`, `order_date`, `check_in`, `check_out`, `room_type`, `room_id`, `status`, `special_request`) VALUES ' + placeholders;
+    const values = generateBookingsToInsert();
 
     connection.execute(sql, values, (err, result, fields) => {
     if (err instanceof Error) {
@@ -230,9 +213,18 @@ const insertIntoBookings = async () => {
 }
 
 const insertIntoReviews = async () => {
-                    
-    const sql = 'INSERT INTO `reviews`(`booking_id`, `rating`, `review`) VALUES (?, ?, ?)';
-    const values = [1, 5, 'good'];
+
+    const generatePlaceholders = (num: number) => {
+        let values = '(?, ?, ?)';
+        for (let i = 0; i < num - 1; i++) {
+            values += ', (?, ?, ?)';
+        }
+        return values;
+    }
+                   
+    const placeholders = generatePlaceholders(INTERVALS);
+    const sql = 'INSERT INTO `reviews`(`booking_id`, `rating`, `review`) VALUES ' + placeholders;
+    const values = generateReviewsToInsert();
 
     connection.execute(sql, values, (err, result, fields) => {
     if (err instanceof Error) {
@@ -243,7 +235,6 @@ const insertIntoReviews = async () => {
     });
 }
 
-createAdminsTable();
 createStaffTable();
 createRoomsTable();
 createBookingsTable();
